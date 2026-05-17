@@ -5,18 +5,39 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float speed = 100f;
-    private int damage = 20;
-    public Rigidbody rb;
-    public Transform bullet;
-    void Start()
+    public int damage = 10;
+
+    private Vector3 direction;
+    private string ownerTag;
+    
+
+    public void Init(Vector3 direction, string owner)
     {
+        this.direction = direction.normalized;
+        ownerTag = owner;
+
         Destroy(gameObject, 3f);
-        rb = GetComponent<Rigidbody>();
-        bullet = GetComponent<Transform>();
     }
 
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.position += direction * speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(ownerTag)) return;
+
+        if(ownerTag == "Enemy" && other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+
+        if(ownerTag == "Player" && other.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyHealth>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }

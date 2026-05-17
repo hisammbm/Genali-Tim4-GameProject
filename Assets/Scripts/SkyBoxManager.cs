@@ -21,6 +21,7 @@ public class SkyBoxManager : MonoBehaviour
         {
             int index = Random.Range(0, skyboxes.Length);
             RenderSettings.skybox = skyboxes[index];
+            DynamicGI.UpdateEnvironment();
         }
     }
 }
