@@ -15,18 +15,18 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.28239948, g: 0.31792444, b: 0.4415095, a: 1}
+  m_FogColor: {r: 0, g: 0.00908019, b: 0.2905661, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.005
   m_LinearFogStart: 100
   m_LinearFogEnd: 425
-  m_AmbientSkyColor: {r: 0.18790321, g: 0.19701225, b: 0.21509439, a: 1}
+  m_AmbientSkyColor: {r: 0.57924527, g: 0.61233824, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ab675e6698bde46fd87143fb0d7580cb, type: 2}
+  m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 829416442}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -705,7 +705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469614975}
   - component: {fileID: 469614976}
-  - component: {fileID: 469614977}
+  - component: {fileID: 469614979}
   - component: {fileID: 469614978}
   m_Layer: 0
   m_Name: GameManager
@@ -747,24 +747,6 @@ MonoBehaviour:
   - {fileID: 6135008253007443742, guid: 018e80fc04f4dc044add37fa39c8c6a3, type: 3}
   speed: 10
   spawnPoint: {fileID: 2018166885}
---- !u!114 &469614977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469614974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76797f0852aa0f46bb1c87fe20a0929, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skyboxes:
-  - {fileID: 2100000, guid: 8dd2f17b6e3f8174390967bc55ead836, type: 2}
-  - {fileID: 2100000, guid: 6eecb3bb77b3f7a43a504fceda3b0b5f, type: 2}
-  - {fileID: 2100000, guid: 6e00f8b39315691449f256740a5cb862, type: 2}
-  - {fileID: 2100000, guid: 7a8675eb396637d43b4ba0a69cc715a5, type: 2}
-  - {fileID: 2100000, guid: 023808db2bfa00d44929aa2176d29c76, type: 2}
 --- !u!82 &469614978
 AudioSource:
   m_ObjectHideFlags: 0
@@ -861,6 +843,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &469614979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469614974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54c3aea0704a4349bff56800a7cf869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightingManager: {fileID: 829416444}
+  skyboxMaterials:
+  - {fileID: 2100000, guid: d1fdb8e44b28da34d9e922cca0bc740e, type: 2}
+  - {fileID: 2100000, guid: 023808db2bfa00d44929aa2176d29c76, type: 2}
+  - {fileID: 2100000, guid: 8dd2f17b6e3f8174390967bc55ead836, type: 2}
+  - {fileID: 2100000, guid: 44d0573bf6d91e447b62f3aff840f2ae, type: 2}
+  - {fileID: 2100000, guid: d1fdb8e44b28da34d9e922cca0bc740e, type: 2}
 --- !u!1 &829416440
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +873,7 @@ GameObject:
   - component: {fileID: 829416443}
   - component: {fileID: 829416442}
   - component: {fileID: 829416441}
+  - component: {fileID: 829416444}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -913,7 +915,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -972,13 +974,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829416440}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.061628457, y: 0.70441604, z: 0.70441604, w: 0.061628457}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.5, y: -190, z: 0.7}
+--- !u!114 &829416444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829416440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8013ffb808c094d8332457a88a7b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DirectionalLight: {fileID: 829416442}
+  Preset: {fileID: 11400000, guid: 1d15e715736409143b5e57d10e4a8570, type: 2}
+  TimeOfDay: 0
 --- !u!1001 &975067842
 PrefabInstance:
   m_ObjectHideFlags: 0
