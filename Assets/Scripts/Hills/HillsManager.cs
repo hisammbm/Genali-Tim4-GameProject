@@ -9,6 +9,7 @@ public class HillsManager : MonoBehaviour
     public static HillsManager instance;  
     public float speed = 10f;
     public Transform spawnPoint;
+    public Transform spawnPoint2;
     //public Material skybox;
 
     void Awake()

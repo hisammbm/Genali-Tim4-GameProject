@@ -8,6 +8,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private LightingPreset Preset;
     //Variables
     [SerializeField, Range(0, 24)] public float TimeOfDay;
+    public float TimeSpeed = 1f;
 
 
     private void Update()
@@ -18,7 +19,7 @@ public class LightingManager : MonoBehaviour
         if (Application.isPlaying)
         {
             //(Replace with a reference to the game time)
-            TimeOfDay += Time.deltaTime;
+            TimeOfDay += Time.deltaTime * TimeSpeed;
             TimeOfDay %= 24; //Modulus to ensure always between 0-24
             UpdateLighting(TimeOfDay / 24f);
         }
