@@ -18,8 +18,9 @@ public class HillMovement : MonoBehaviour
 
         if (transform.position.z < player.transform.position.z)
         {
-            Destroy(gameObject);
-            HillsManager.instance.SpawnHill();
+            //Destroy(gameObject);
+            //HillsManager.instance.SpawnHill();
+            transform.position = HillsManager.instance.spawnPoint.position;
         }
     }
 }
