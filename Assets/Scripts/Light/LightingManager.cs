@@ -10,6 +10,8 @@ public class LightingManager : MonoBehaviour
     [SerializeField, Range(0, 24)] public float TimeOfDay;
     public float TimeSpeed = 1f;
 
+    [Header("underFog")]
+    public GameObject underFog;
 
     private void Update()
     {
@@ -35,6 +37,11 @@ public class LightingManager : MonoBehaviour
         //Set ambient and fog
         RenderSettings.ambientLight = Preset.AmbientColor.Evaluate(timePercent);
         RenderSettings.fogColor = Preset.FogColor.Evaluate(timePercent);
+
+        if (underFog != null)
+        {
+            underFog.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor", Preset.FogColor2.Evaluate(timePercent));
+        }
 
         //If the directional light is set then rotate and set it's color, I actually rarely use the rotation because it casts tall shadows unless you clamp the value
         if (DirectionalLight != null)

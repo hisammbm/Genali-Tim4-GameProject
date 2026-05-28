@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4983233276443377268}
   - component: {fileID: 4816693410122847220}
   - component: {fileID: 8320821859543178464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4911,7 +4911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2302704012981483223}
   - component: {fileID: 8415433486675268366}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: particle_explode_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5043,7 +5043,7 @@ GameObject:
   - component: {fileID: 8887498344690192885}
   - component: {fileID: 3448757816799747852}
   - component: {fileID: 310212972691426891}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9944,7 +9944,7 @@ GameObject:
   - component: {fileID: 8148002418176152248}
   - component: {fileID: 86868503403803393}
   - component: {fileID: 7087298341669553835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
