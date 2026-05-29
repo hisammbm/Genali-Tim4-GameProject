@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private PowerUpDrop powerUpDrop;
+
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private GameObject explodeParticle;
+
     private int _currentHealth;
-    public int CurrentHealth { 
+
+    public int CurrentHealth
+    {
         get => _currentHealth;
         set
         {
@@ -17,14 +21,17 @@ public class EnemyHealth : MonoBehaviour
             OnHealthChanged();
         }
     }
+
     void Start()
     {
-        CurrentHealth = maxHealth;   
+        CurrentHealth = maxHealth;
+
+        powerUpDrop = GetComponent<PowerUpDrop>();
     }
 
     private void OnHealthChanged()
     {
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             Die();
         }
@@ -39,7 +46,14 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         TriggerExplode();
+
+        if (powerUpDrop != null)
+        {
+            powerUpDrop.Drop();
+        }
+
         GameManager.instance.AddScore(10);
+
         Destroy(gameObject);
     }
 
@@ -47,7 +61,11 @@ public class EnemyHealth : MonoBehaviour
     {
         if (gameObject == null) return;
 
-        GameObject particle =  Instantiate(explodeParticle, gameObject.transform.position, Quaternion.identity);
+        GameObject particle = Instantiate(
+            explodeParticle,
+            gameObject.transform.position,
+            Quaternion.identity
+        );
 
         Destroy(particle, 3f);
     }
