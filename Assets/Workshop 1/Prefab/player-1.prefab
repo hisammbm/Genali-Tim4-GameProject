@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5050531998232240612}
   - component: {fileID: 7757742856816494635}
   - component: {fileID: 245201964767219579}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player-1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -80,6 +80,7 @@ MonoBehaviour:
   firePoint2: {fileID: 6006274978878298588}
   projectilePrefab: {fileID: 8297191405790434548, guid: 0707898d3f02d8c499685d8871d5031a,
     type: 3}
+  healthImg: {fileID: 0}
 --- !u!82 &245201964767219579
 AudioSource:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ GameObject:
   - component: {fileID: 5050531998404469736}
   - component: {fileID: 5050531998404469742}
   - component: {fileID: 5050531998404469743}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5026,7 +5027,7 @@ GameObject:
   - component: {fileID: 4728112663299037593}
   - component: {fileID: 8517005084972291644}
   - component: {fileID: 5897056575010956022}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: aircraft-i_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5109,7 +5110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1037042924742132203}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: firepoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5140,7 +5141,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6006274978878298588}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: firepoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5174,6 +5175,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Particle System
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451484317306073886, guid: 1e1e7d2e5f30c00459ef49534bba50cc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1451484317306073887, guid: 1e1e7d2e5f30c00459ef49534bba50cc,
         type: 3}

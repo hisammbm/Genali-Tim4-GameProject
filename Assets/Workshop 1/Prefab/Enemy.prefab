@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3081296295356385285}
   - component: {fileID: 5460022590631089066}
   - component: {fileID: 1866229976658209951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4124702794306685404}
   - component: {fileID: 8335884206405967432}
   - component: {fileID: 7344434477572993462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4952,7 +4952,7 @@ GameObject:
   - component: {fileID: 8741784707531297661}
   - component: {fileID: 8524385906705755321}
   - component: {fileID: 1755780871706616491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9789,7 +9789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5755027329617809603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: firepoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9822,7 +9822,7 @@ GameObject:
   - component: {fileID: 2856959226673128504}
   - component: {fileID: 3201063595895329550}
   - component: {fileID: 6971955526466827544}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: aircraft-i_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9905,7 +9905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490323150984831926}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: firepoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
