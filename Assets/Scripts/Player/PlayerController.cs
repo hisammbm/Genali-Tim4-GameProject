@@ -18,7 +18,7 @@ public Transform firePoint2;
 private AudioSource shootAudio;
 public GameObject projectilePrefab;
 
-[SerializeField] private float normalShootDelay = 0.2f;
+[SerializeField] private float normalShootDelay = 0.5f;
 [SerializeField] private float rapidShootDelay = 0.05f;
 
 private float nextShootTime = 0f;
@@ -98,6 +98,7 @@ private bool rapidFireActive = false;
 
 public void ActivateRapidFire(float duration)
 {
+    StopAllCoroutines();
     StartCoroutine(RapidFireRoutine(duration));
 }
 
@@ -105,9 +106,13 @@ IEnumerator RapidFireRoutine(float duration)
 {
     rapidFireActive = true;
 
+    Debug.Log("Rapid Fire ON");
+
     yield return new WaitForSeconds(duration);
 
     rapidFireActive = false;
+
+    Debug.Log("Rapid Fire OFF");
 }
     void OnHealthChanged()
     {

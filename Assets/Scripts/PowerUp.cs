@@ -6,13 +6,17 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.CompareTag("Player"))
+            return;
+
+        Debug.Log("POWERUP DIAMBIL");
+
         PlayerController player =
             other.GetComponent<PlayerController>();
 
-        if(player != null)
+        if (player != null)
         {
             player.ActivateRapidFire(duration);
-
             Destroy(gameObject);
         }
     }
