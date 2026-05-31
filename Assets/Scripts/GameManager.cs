@@ -18,6 +18,6 @@ public class GameManager : MonoBehaviour
     public void AddScore(int score)
     {
         currentScore += score;
-        txtScore.text = $"Score: {currentScore}";
+        txtScore.text = $"{currentScore}";
     }
 }
