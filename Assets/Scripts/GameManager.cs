@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Score")]
     [SerializeField] private TMP_Text txtScore;
     [SerializeField] private TMP_Text txtHighScore;
+    [SerializeField] private TMP_Text txtGameOverScore;
     private int currentScore = 0;
     private int highScore = 0;
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     {
         highScore = PlayerPrefs.GetInt("highScore", 0);
         txtScore.text = currentScore.ToString();
+        txtGameOverScore.text = currentScore.ToString();
         txtHighScore.text = highScore.ToString();
     }
 
@@ -29,10 +31,12 @@ public class GameManager : MonoBehaviour
     {
         currentScore += score;
         txtScore.text = $"{currentScore}";
+        txtGameOverScore.text = $"{currentScore}";
 
         if (highScore < currentScore)
         {
             PlayerPrefs.SetInt("highScore", currentScore);
+            txtHighScore.text = $"{currentScore}";
         }
     }
 }

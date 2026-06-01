@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint2;
     private AudioSource shootAudio;
     public GameObject projectilePrefab;
+    public GameObject GameOverUI;
 
     [Header("Health")]
     private int maxHealth = 100;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         shootAudio = GetComponent<AudioSource>();
         CurrentHealth = maxHealth;
+        Time.timeScale = 1;
     }
 
     void Update()
@@ -96,5 +98,6 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Time.timeScale = 0;
+        GameOverUI.SetActive(true);
     }
 }
