@@ -17,6 +17,14 @@ public class EnemyHealth : MonoBehaviour
             OnHealthChanged();
         }
     }
+
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         CurrentHealth = maxHealth;   
@@ -48,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
         if (gameObject == null) return;
 
         GameObject particle =  Instantiate(explodeParticle, gameObject.transform.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.Explosion);
 
         Destroy(particle, 3f);
     }

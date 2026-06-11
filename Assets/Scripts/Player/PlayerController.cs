@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting")]
     public Transform firePoint;
     public Transform firePoint2;
-    private AudioSource shootAudio;
     public GameObject projectilePrefab;
     public GameObject GameOverUI;
 
@@ -32,9 +31,11 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
+    AudioManager audioManager;
+
     private void Awake()
     {
-        shootAudio = GetComponent<AudioSource>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         CurrentHealth = maxHealth;
         Time.timeScale = 1;
     }
@@ -65,11 +66,11 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             ShootForm(firePoint);
             ShootForm(firePoint2);
-            shootAudio.Play();
+            audioManager.PlaySFX(audioManager.Shoot);
         }
     }
 
