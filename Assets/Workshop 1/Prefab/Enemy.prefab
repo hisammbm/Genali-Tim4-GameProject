@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3081296295356385285}
   - component: {fileID: 5460022590631089066}
   - component: {fileID: 1866229976658209951}
+  - component: {fileID: 5803861246512287641}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -102,6 +103,21 @@ MonoBehaviour:
   firePoint2: {fileID: 5755027329617809603}
   projectilePrefab: {fileID: 8297191405790434548, guid: 0707898d3f02d8c499685d8871d5031a,
     type: 3}
+--- !u!114 &5803861246512287641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63637050091038583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4d7ef4e46d15b48814f5740b8f4e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefab: {fileID: 6192955277462077406, guid: f9bbb63ba149dd143b141525f9b4018e,
+    type: 3}
+  dropChance: 100
 --- !u!1 &1112613527844184088
 GameObject:
   m_ObjectHideFlags: 0

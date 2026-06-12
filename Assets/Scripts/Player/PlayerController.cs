@@ -13,10 +13,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float minY = -3f, maxY = 9.7f;
 
     [Header("Shooting")]
-    public Transform firePoint;
-    public Transform firePoint2;
-    private AudioSource shootAudio;
-    public GameObject projectilePrefab;
+public Transform firePoint;
+public Transform firePoint2;
+private AudioSource shootAudio;
+public GameObject projectilePrefab;
+
+[SerializeField] private float normalShootDelay = 0.5f;
+[SerializeField] private float rapidShootDelay = 0.05f;
+
+private float nextShootTime = 0f;
+private bool rapidFireActive = false;
 
     [Header("Health")]
     private int maxHealth = 100;
@@ -62,22 +68,52 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Shoot()
+{
+    float shootDelay =
+        rapidFireActive ?
+        rapidShootDelay :
+        normalShootDelay;
+
+    if (Input.GetMouseButton(0) &&
+        Time.time >= nextShootTime)
     {
-        if (Input.GetMouseButton(0))
+        ShootForm(firePoint);
+        ShootForm(firePoint2);
+
+        if (!shootAudio.isPlaying)
         {
-            ShootForm(firePoint);
-            ShootForm(firePoint2);
             shootAudio.Play();
         }
-    }
 
-    void ShootForm(Transform point)
-    {
-        GameObject bulletObj = Instantiate(projectilePrefab, point.position, point.rotation);
-        Bullet bullet = bulletObj.GetComponent<Bullet>();
-        bullet.Init(point.forward, "Player");
+        nextShootTime = Time.time + shootDelay;
     }
+}
 
+   void ShootForm(Transform point)
+{
+    GameObject bulletObj = Instantiate(projectilePrefab, point.position, point.rotation);
+    Bullet bullet = bulletObj.GetComponent<Bullet>();
+    bullet.Init(point.forward, "Player");
+}
+
+public void ActivateRapidFire(float duration)
+{
+    StopAllCoroutines();
+    StartCoroutine(RapidFireRoutine(duration));
+}
+
+IEnumerator RapidFireRoutine(float duration)
+{
+    rapidFireActive = true;
+
+    Debug.Log("Rapid Fire ON");
+
+    yield return new WaitForSeconds(duration);
+
+    rapidFireActive = false;
+
+    Debug.Log("Rapid Fire OFF");
+}
     void OnHealthChanged()
     {
         healthImg.fillAmount = (float)_currentHealth / maxHealth;
