@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ShootType { Straight, Targeted }
+
 public class EnemyShooting : MonoBehaviour
 {
-    [Header("Shooting")]
+    [Header("Shooting Settings")]
+    public ShootType shootType = ShootType.Straight;
+    public float bulletSpeed = 15f;
+    public float shootInterval = 2.0f;
+    public float initialDelay = 2.0f;
+
+    [Header("Shooting Points")]
     public Transform firePoint;
     public Transform firePoint2;
     public GameObject projectilePrefab;
@@ -17,10 +25,12 @@ public class EnemyShooting : MonoBehaviour
 
     IEnumerator ShootDelay()
     {
+        // Beri delay awal agar musuh tidak langsung menembak begitu spawn
+        yield return new WaitForSeconds(initialDelay);
         while (true)
         {
-            yield return new WaitForSeconds(1.5f);
             Shoot();
+            yield return new WaitForSeconds(shootInterval);
         }
     }
     public void Shoot()
@@ -35,7 +45,19 @@ public class EnemyShooting : MonoBehaviour
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.transform.localScale = new Vector3(bulletSize, bulletSize, bulletSize);
         bullet.damage = 5;
-        bullet.Init(point.forward, "Enemy");
+
+        Vector3 shootDirection = point.forward;
+
+        if (shootType == ShootType.Targeted)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                shootDirection = (player.transform.position - point.position).normalized;
+            }
+        }
+
+        bullet.Init(shootDirection, "Enemy", bulletSpeed);
     }
 
 }

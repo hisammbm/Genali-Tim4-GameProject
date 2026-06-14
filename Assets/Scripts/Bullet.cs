@@ -11,10 +11,14 @@ public class Bullet : MonoBehaviour
     private string ownerTag;
     
 
-    public void Init(Vector3 direction, string owner)
+    public void Init(Vector3 direction, string owner, float customSpeed = -1f)
     {
         this.direction = direction.normalized;
         ownerTag = owner;
+        if (customSpeed > 0f)
+        {
+            this.speed = customSpeed;
+        }
 
         Destroy(gameObject, 3f);
     }

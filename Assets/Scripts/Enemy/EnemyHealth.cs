@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private GameObject explodeParticle;
+    [SerializeField] private int scoreValue = 10;
 
     private int _currentHealth;
 
@@ -52,7 +53,7 @@ public class EnemyHealth : MonoBehaviour
             powerUpDrop.Drop();
         }
 
-        GameManager.instance.AddScore(10);
+        GameManager.instance.AddScore(scoreValue);
 
         Destroy(gameObject);
     }
