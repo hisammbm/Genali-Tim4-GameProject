@@ -13,16 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float minY = -3f, maxY = 9.7f;
 
     [Header("Shooting")]
-public Transform firePoint;
-public Transform firePoint2;
-private AudioSource shootAudio;
-public GameObject projectilePrefab;
-
-[SerializeField] private float normalShootDelay = 0.5f;
-[SerializeField] private float rapidShootDelay = 0.05f;
-
-private float nextShootTime = 0f;
-private bool rapidFireActive = false;
+    public Transform firePoint;
+    public Transform firePoint2;
+    private AudioSource shootAudio;
+    public GameObject projectilePrefab;
 
     [Header("Health")]
     private int maxHealth = 100;
@@ -37,10 +31,13 @@ private bool rapidFireActive = false;
         } 
     }
 
+    AudioManager audioManager;
+
     private void Awake()
     {
-        shootAudio = GetComponent<AudioSource>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         CurrentHealth = maxHealth;
+        Time.timeScale = 1;
     }
 
     void Update()
@@ -68,26 +65,14 @@ private bool rapidFireActive = false;
     }
 
     public void Shoot()
-{
-    float shootDelay =
-        rapidFireActive ?
-        rapidShootDelay :
-        normalShootDelay;
-
-    if (Input.GetMouseButton(0) &&
-        Time.time >= nextShootTime)
     {
-        ShootForm(firePoint);
-        ShootForm(firePoint2);
-
-        if (!shootAudio.isPlaying)
+        if (Input.GetMouseButton(0))
         {
+            ShootForm(firePoint);
+            ShootForm(firePoint2);
             shootAudio.Play();
         }
-
-        nextShootTime = Time.time + shootDelay;
     }
-}
 
    void ShootForm(Transform point)
 {
@@ -132,5 +117,6 @@ IEnumerator RapidFireRoutine(float duration)
     void Die()
     {
         Time.timeScale = 0;
+        GameOverUI.SetActive(true);
     }
 }
