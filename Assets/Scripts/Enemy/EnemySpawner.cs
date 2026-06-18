@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public enum FormationType { Line, VShape, Random };
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    [SerializeField] private TMP_Text txtWave;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject eliteEnemyPrefab;
     [SerializeField] private GameObject bossPrefab;
@@ -23,6 +23,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float minBoundX = -9.9f;
     [SerializeField] private float maxBoundX = 9.9f;
 
+    [Header("Boss Settings")]
+    [SerializeField] private GameObject hpBoss;
+    [SerializeField] private Image bossHpBar;
+    private EnemyHealth currentBossHealth;
+
     private List<GameObject> activeEnemies = new List<GameObject>();
     private bool isSpawning = false;
     private int waveCount = 0;
@@ -34,7 +39,10 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        txtWave.text = $"Wave: {waveCount}";
+        if(currentBossHealth != null)
+        {
+            bossHpBar.fillAmount = (float)currentBossHealth.CurrentHealth / currentBossHealth.maxHealth;
+        }
         if (isSpawning) return;
 
         activeEnemies.RemoveAll(x => x  == null || !x.activeInHierarchy);
@@ -43,6 +51,7 @@ public class EnemySpawner : MonoBehaviour
         {
             StartCoroutine(SpawnNextWave());
         }
+
     }
 
     IEnumerator SpawnNextWave()
@@ -53,16 +62,16 @@ public class EnemySpawner : MonoBehaviour
 
         yield return new WaitForSeconds(delayBetweenWaves);
 
-        // Jika wave kelipatan 5, memicu Boss Fight
         if (waveCount % 5 == 0)
         {
             Debug.Log("BOSS FIGHT DETECTED!");
             SpawnBoss();
+            hpBoss.SetActive(true);
         }
         else
         {
-            // Menentukan prefab berdasarkan siklus wave (1-2 normal, 3-4 elite)
-            int cycle = (waveCount - 1) % 5 + 1; // Menghasilkan nilai 1, 2, 3, 4
+            hpBoss.SetActive(false);
+            int cycle = (waveCount - 1) % 5 + 1; 
             GameObject prefabToSpawn = enemyPrefab;
 
             if ((cycle == 3 || cycle == 4) && eliteEnemyPrefab != null)
@@ -141,6 +150,9 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 targetPos = new Vector3(0f, 3f, 0f); // Boss berada di tengah-atas layar
         GameObject newBoss = Instantiate(bossPrefab, Vector3.zero, bossPrefab.transform.rotation);
+        currentBossHealth = newBoss.GetComponent<EnemyHealth>();
+
+
         newBoss.transform.SetParent(spawnCenter, false);
 
         Vector3 startPos = new Vector3(targetPos.x, targetPos.y + 10f, 0f);

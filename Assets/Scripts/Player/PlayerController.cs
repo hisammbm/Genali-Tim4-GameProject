@@ -15,13 +15,14 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting")]
     public Transform firePoint;
     public Transform firePoint2;
-    private AudioSource shootAudio;
     public GameObject projectilePrefab;
+    private bool rapidFireActive = false;
 
     [Header("Health")]
-    private int maxHealth = 100;
+    [SerializeField]private int maxHealth = 100;
     private int _currentHealth;
     public Image healthImg;
+    public GameObject GameOverUI;
     public int CurrentHealth {
         get => _currentHealth;
         set
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
         {
             ShootForm(firePoint);
             ShootForm(firePoint2);
-            shootAudio.Play();
+            audioManager.PlaySFX(audioManager.Shoot);
         }
     }
 
