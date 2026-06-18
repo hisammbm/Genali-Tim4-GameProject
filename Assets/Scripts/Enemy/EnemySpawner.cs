@@ -83,21 +83,22 @@ public class EnemySpawner : MonoBehaviour
             int currentEnemyCount = baseEnemyCount + (waveCount / 5);
 
             FormationType randomFormation = (FormationType)Random.Range(0, 2);
-            TriggerSpawn(randomFormation, prefabToSpawn, currentEnemyCount);
+            float waveSwayOffset = Random.Range(0f, 100f); // Sync sway for this wave
+            TriggerSpawn(randomFormation, prefabToSpawn, currentEnemyCount, waveSwayOffset);
         }
 
         isSpawning = false;
     }
 
-    void TriggerSpawn(FormationType formation, GameObject prefab, int count)
+    void TriggerSpawn(FormationType formation, GameObject prefab, int count, float swayOffset)
     {
         switch (formation)
         {
             case FormationType.Line:
-                SpawnLine(prefab, count);
+                SpawnLine(prefab, count, swayOffset);
                 break;
             case FormationType.VShape:
-                SpawnVShape(prefab, count);
+                SpawnVShape(prefab, count, swayOffset);
                 break;
         }
     }
@@ -109,34 +110,50 @@ public class EnemySpawner : MonoBehaviour
         return worldX - spawnCenter.position.x;
     }
 
-    void SpawnLine(GameObject prefab, int count)
+    void SpawnLine(GameObject prefab, int count, float swayOffset)
     {
-        float startX = 0f - ((count - 1) * spacing / 2f);
+        float currentSpacing = spacing;
+        float maxAllowedWidth = (maxBoundX - minBoundX) * 0.95f; // Kasih sedikit margin
+        if ((count - 1) * currentSpacing > maxAllowedWidth)
+        {
+            currentSpacing = maxAllowedWidth / Mathf.Max(1, count - 1);
+        }
+
+        float startX = 0f - ((count - 1) * currentSpacing / 2f);
 
         for (int i = 0; i < count; i++)
         {
-            float targetX = startX + (i * spacing);
+            float targetX = startX + (i * currentSpacing);
             float clampedLocalX = GetClampedX(targetX);
 
             Vector3 targetPosition = new Vector3(clampedLocalX, 0f, 0);
-            SpawnEnemy(targetPosition, prefab);
+            SpawnEnemy(targetPosition, prefab, swayOffset);
         }
     }
 
-    void SpawnVShape(GameObject prefab, int count)
+    void SpawnVShape(GameObject prefab, int count, float swayOffset)
     {
-        float startX = 0f - ((count - 1) * spacing / 2f);
+        float currentSpacing = spacing;
+        float maxAllowedWidth = (maxBoundX - minBoundX) * 0.95f;
+        if ((count - 1) * currentSpacing > maxAllowedWidth)
+        {
+            currentSpacing = maxAllowedWidth / Mathf.Max(1, count - 1);
+        }
+
+        float startX = 0f - ((count - 1) * currentSpacing / 2f);
         int middleIndex = count / 2;
 
         for (int i = 0; i < count; i++)
         {
-            float targetX = startX + (i * spacing);
+            float targetX = startX + (i * currentSpacing);
 
             float clampedLocalX = GetClampedX(targetX);
-            float depthY = Mathf.Abs(i - middleIndex) * spacing;
+            // Gunakan currentSpacing agar proporsional, dan batasi max depthY agar tidak spawn di luar batas Y=20
+            float depthY = Mathf.Abs(i - middleIndex) * currentSpacing; 
+            depthY = Mathf.Min(depthY, 9.5f); // Max target Y 9.5, jadi startY max 19.5
             Vector3 targetPosition = new Vector3(clampedLocalX, depthY, 0);
 
-            SpawnEnemy(targetPosition, prefab);
+            SpawnEnemy(targetPosition, prefab, swayOffset);
         }
     }
 
@@ -167,7 +184,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy(Vector3 targetPos, GameObject prefab)
+    void SpawnEnemy(Vector3 targetPos, GameObject prefab, float swayOffset = 0f)
     {
         if (prefab == null) return;
 
@@ -175,6 +192,7 @@ public class EnemySpawner : MonoBehaviour
         newEnemy.transform.SetParent(spawnCenter, false);
 
         Vector3 startShootFromSky = new Vector3(targetPos.x, targetPos.y + 10f, 0f);
+        startShootFromSky.y = Mathf.Min(startShootFromSky.y, 20f); // Pastikan mutlak tidak lebih dari 20 sesuai permintaan
         newEnemy.transform.localPosition = startShootFromSky;
 
         activeEnemies.Add(newEnemy);
@@ -183,6 +201,7 @@ public class EnemySpawner : MonoBehaviour
         if (movement != null)
         {
             movement.SetTargetPosition(targetPos);
+            movement.SetSwayOffset(swayOffset);
         }
     }
 }

@@ -20,10 +20,14 @@ public class EnemyMovement : MonoBehaviour
     private float randomOffset;
     private Quaternion defaultRotation;
     private EnemyShooting enemyShooting;
+    private bool hasSetSway = false;
 
     private void Start()
     {
-        randomOffset = Random.Range(0f, 100f);
+        if (!hasSetSway)
+        {
+            randomOffset = Random.Range(0f, 100f);
+        }
         enemyShooting = GetComponent<EnemyShooting>();
         defaultRotation = transform.rotation;
     }
@@ -56,31 +60,13 @@ public class EnemyMovement : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
-                float targetX = defaultRotation.eulerAngles.x;
-                float targetZ = defaultRotation.eulerAngles.z;
-
-                // Cek Jarak Vertikal (Rotasi X)
-                // Jika musuh lebih tinggi (diffY > 0) -> rotasikan X ke 35 derajat
-                // Jika musuh lebih rendah (diffY < 0) -> rotasikan X ke -35 derajat
-                float diffY = transform.position.y - player.transform.position.y;
-                if (Mathf.Abs(diffY) > rotationThresholdY)
+                Vector3 directionToPlayer = player.transform.position - transform.position;
+                
+                if (directionToPlayer != Vector3.zero)
                 {
-                    targetX = diffY > 0 ? 35f : -35f;
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 }
-
-                // Cek Jarak Horizontal (Rotasi Z)
-                // Jika musuh di kanan player (diffX > 0) -> rotasikan Z ke -35 derajat
-                // Jika musuh di kiri player (diffX < 0) -> rotasikan Z ke 35 derajat
-                float diffX = transform.position.x - player.transform.position.x;
-                if (Mathf.Abs(diffX) > rotationThresholdX)
-                {
-                    targetZ = diffX > 0 ? -35f : 35f;
-                }
-
-                float targetY = defaultRotation.eulerAngles.y;
-
-                Quaternion targetRotation = Quaternion.Euler(targetX, targetY, targetZ);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
         }
         else
@@ -94,5 +80,11 @@ public class EnemyMovement : MonoBehaviour
     {
         resultPos = pos;
         hasReachedTarget = false;
+    }
+
+    public void SetSwayOffset(float offset)
+    {
+        randomOffset = offset;
+        hasSetSway = true;
     }
 }
