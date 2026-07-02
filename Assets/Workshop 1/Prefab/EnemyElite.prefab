@@ -9900,6 +9900,10 @@ MonoBehaviour:
   canSway: 1
   swayAmount: 1.5
   swaySpeed: 2
+  autoRotateToPlayerIfTargeted: 1
+  rotationSpeed: 5
+  rotationThresholdX: 1.5
+  rotationThresholdY: 1.5
 --- !u!114 &5776712431120046446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9929,10 +9933,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootType: 1
+  bulletSpeed: 15
+  shootInterval: 2
+  initialDelay: 2
   firePoint: {fileID: 6599782123407888255}
   firePoint2: {fileID: 7963054519335780861}
   projectilePrefab: {fileID: 8297191405790434548, guid: 0707898d3f02d8c499685d8871d5031a,
     type: 3}
+  isBoss: 0
+  spreadCount: 5
+  spreadAngle: 45
+  spiralInterval: 0.1
+  spiralAngleStep: 15
 --- !u!114 &6736516693133192661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9945,6 +9957,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4d7ef4e46d15b48814f5740b8f4e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpPrefab: {fileID: 6192955277462077406, guid: f9bbb63ba149dd143b141525f9b4018e,
-    type: 3}
+  powerUpPrefabs:
+  - prefab: {fileID: 6140972579523626162, guid: e9154be163d8c9245bd0301b94d74582,
+      type: 3}
+    weight: 50
+  - prefab: {fileID: 4256219081283213455, guid: e996c22790276bf49aeb841e89a1b251,
+      type: 3}
+    weight: 50
+  - prefab: {fileID: 8095336129290731027, guid: a30883bebbdbfb7488be008b58fd0e66,
+      type: 3}
+    weight: 50
   dropChance: 100

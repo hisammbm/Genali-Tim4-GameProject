@@ -5695,6 +5695,7 @@ MonoBehaviour:
   txtScore: {fileID: 0}
   txtHighScore: {fileID: 0}
   txtGameOverScore: {fileID: 0}
+  buffs: []
 --- !u!1 &469614974
 GameObject:
   m_ObjectHideFlags: 0
@@ -20045,12 +20046,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 63637050091038583, guid: 06613bfeb92aa0943be7ead2cfd0cb66,
     type: 3}
+  eliteEnemyPrefab: {fileID: 0}
+  bossPrefab: {fileID: 0}
   delayBetweenWaves: 1
   spawnCenter: {fileID: 1993419107}
-  enemyCount: 3
+  baseEnemyCount: 5
   spacing: 10
   minBoundX: -9.9
   maxBoundX: 9.9
+  hpBoss: {fileID: 0}
+  bossHpBar: {fileID: 0}
 --- !u!1 &1419308012
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
     public Transform firePoint2;
     public GameObject projectilePrefab;
+    [SerializeField] private float normalFireRate = 0.4f;
+    [SerializeField] private float rapidFireRate = 0.15f;
+    private float nextFireTime = 0f;
     private bool rapidFireActive = false;
 
     [Header("Health")]
@@ -23,6 +26,14 @@ public class PlayerController : MonoBehaviour
     private int _currentHealth;
     public Image healthImg;
     public GameObject GameOverUI;
+
+    [Header("Shield")]
+    [SerializeField] private GameObject shieldVisual;
+    private bool shieldActive = false;
+    private Coroutine shieldCoroutine;
+
+    private Coroutine rapidFireCoroutine;
+    private Coroutine healthRegenCoroutine;
     public int CurrentHealth {
         get => _currentHealth;
         set
@@ -39,6 +50,8 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         CurrentHealth = maxHealth;
         Time.timeScale = 1;
+
+        if (shieldVisual != null) shieldVisual.SetActive(false);
     }
 
     void Update()
@@ -67,8 +80,11 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
         {
+            float currentFireRate = rapidFireActive ? rapidFireRate : normalFireRate;
+            nextFireTime = Time.time + currentFireRate;
+
             ShootForm(firePoint);
             ShootForm(firePoint2);
             audioManager.PlaySFX(audioManager.Shoot);
@@ -82,24 +98,30 @@ public class PlayerController : MonoBehaviour
     bullet.Init(point.forward, "Player");
 }
 
-public void ActivateRapidFire(float duration)
-{
-    StopAllCoroutines();
-    StartCoroutine(RapidFireRoutine(duration));
-}
+    public void ActivateRapidFire(float duration, Sprite iconSprite)
+    {
+        if (rapidFireCoroutine != null)
+        {
+            StopCoroutine(rapidFireCoroutine);
+        }
+        rapidFireCoroutine = StartCoroutine(RapidFireRoutine(duration));
 
-IEnumerator RapidFireRoutine(float duration)
-{
-    rapidFireActive = true;
+        if (BuffUIManager.Instance != null && iconSprite != null)
+        {
+            BuffUIManager.Instance.TriggerBuff("RapidFire", iconSprite, duration);
+        }
+    }
 
-    Debug.Log("Rapid Fire ON");
+    IEnumerator RapidFireRoutine(float duration)
+    {
+        rapidFireActive = true;
+        Debug.Log("Rapid Fire ON");
 
-    yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration);
 
-    rapidFireActive = false;
-
-    Debug.Log("Rapid Fire OFF");
-}
+        rapidFireActive = false;
+        Debug.Log("Rapid Fire OFF");
+    }
     void OnHealthChanged()
     {
         healthImg.fillAmount = (float)_currentHealth / maxHealth;
@@ -111,8 +133,94 @@ IEnumerator RapidFireRoutine(float duration)
 
     public void TakeDamage(int dmg)
     {
+        if (shieldActive)
+        {
+            Debug.Log("DAMAGE DIABSORB OLEH SHIELD!");
+            return;
+        }
+
         CurrentHealth -= dmg;
         Debug.Log("Current Health Player: " + CurrentHealth);
+    }
+
+    public void Heal(int amount)
+    {
+        CurrentHealth += amount;
+        Debug.Log("Player Healed: " + amount + ". Current Health: " + CurrentHealth);
+    }
+
+    public void StartHealthRegen(int totalAmount, float duration, Sprite iconSprite)
+    {
+        if (healthRegenCoroutine != null)
+        {
+            StopCoroutine(healthRegenCoroutine);
+        }
+        healthRegenCoroutine = StartCoroutine(HealthRegenRoutine(totalAmount, duration));
+
+        if (BuffUIManager.Instance != null && iconSprite != null)
+        {
+            BuffUIManager.Instance.TriggerBuff("HealthRegen", iconSprite, duration);
+        }
+    }
+
+    private IEnumerator HealthRegenRoutine(int totalAmount, float duration)
+    {
+        float elapsed = 0f;
+        float tickInterval = 0.5f; // Setiap 0.5 detik darah bertambah
+        int ticks = Mathf.CeilToInt(duration / tickInterval);
+        if (ticks <= 0) ticks = 1;
+        
+        float amountPerTick = (float)totalAmount / ticks;
+        float accumulatedHeal = 0f;
+        int totalHealed = 0;
+
+        for (int i = 0; i < ticks; i++)
+        {
+            yield return new WaitForSeconds(tickInterval);
+            
+            accumulatedHeal += amountPerTick;
+            int healThisTick = Mathf.FloorToInt(accumulatedHeal);
+            if (healThisTick > 0)
+            {
+                CurrentHealth += healThisTick;
+                totalHealed += healThisTick;
+                accumulatedHeal -= healThisTick;
+            }
+            
+            Debug.Log($"Health Regen: +{healThisTick} HP. Current Health: {CurrentHealth}");
+        }
+
+        int remaining = totalAmount - totalHealed;
+        if (remaining > 0)
+        {
+            CurrentHealth += remaining;
+            Debug.Log($"Health Regen Remaining: +{remaining} HP. Current Health: {CurrentHealth}");
+        }
+    }
+
+    public void ActivateShield(float duration, Sprite iconSprite)
+    {
+        if (shieldCoroutine != null)
+        {
+            StopCoroutine(shieldCoroutine);
+        }
+        shieldCoroutine = StartCoroutine(ShieldRoutine(duration));
+
+        if (BuffUIManager.Instance != null && iconSprite != null)
+        {
+            BuffUIManager.Instance.TriggerBuff("Shield", iconSprite, duration);
+        }
+    }
+
+    private IEnumerator ShieldRoutine(float duration)
+    {
+        shieldActive = true;
+        if (shieldVisual != null) shieldVisual.SetActive(true);
+
+        yield return new WaitForSeconds(duration);
+
+        shieldActive = false;
+        if (shieldVisual != null) shieldVisual.SetActive(false);
     }
 
     void Die()

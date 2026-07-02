@@ -30,6 +30,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (string.IsNullOrEmpty(ownerTag)) return;
+
         if (other.CompareTag(ownerTag)) return;
 
         if(ownerTag == "Enemy" && other.CompareTag("Player"))
