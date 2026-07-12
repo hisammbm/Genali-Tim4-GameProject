@@ -11,10 +11,14 @@ public class Bullet : MonoBehaviour
     private string ownerTag;
     
 
-    public void Init(Vector3 direction, string owner)
+    public void Init(Vector3 direction, string owner, float customSpeed = -1f)
     {
         this.direction = direction.normalized;
         ownerTag = owner;
+        if (customSpeed > 0f)
+        {
+            this.speed = customSpeed;
+        }
 
         Destroy(gameObject, 3f);
     }
@@ -26,6 +30,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (string.IsNullOrEmpty(ownerTag)) return;
+
         if (other.CompareTag(ownerTag)) return;
 
         if(ownerTag == "Enemy" && other.CompareTag("Player"))

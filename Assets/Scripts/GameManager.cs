@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -13,6 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text txtGameOverScore;
     private int currentScore = 0;
     private int highScore = 0;
+
+    [Header("Buff")]
+    [SerializeField] List<GameObject> buffs = new List<GameObject>();
+    private int selectedBuff = 0;
 
     private void Awake()
     {
@@ -37,6 +42,14 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("highScore", currentScore);
             txtHighScore.text = $"{currentScore}";
+        }
+    }
+
+    public void GiveBuff(int wave)
+    {
+        if(wave%3 == 0)
+        {
+
         }
     }
 }

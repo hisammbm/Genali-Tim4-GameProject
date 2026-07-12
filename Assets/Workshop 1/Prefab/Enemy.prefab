@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3081296295356385285}
   - component: {fileID: 5460022590631089066}
   - component: {fileID: 1866229976658209951}
-  m_Layer: 6
+  - component: {fileID: 5803861246512287641}
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -71,6 +72,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b839d5c5fc2141a4cb493a1fb9061ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canSway: 1
+  swayAmount: 1.5
+  swaySpeed: 2
+  autoRotateToPlayerIfTargeted: 1
+  rotationSpeed: 5
+  rotationThresholdX: 1.5
+  rotationThresholdY: 1.5
 --- !u!114 &5460022590631089066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,9 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1f7bf0739b6f3469face808994fa62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 5
   explodeParticle: {fileID: 2302704012981483216, guid: f9e49c19e36969b4c90fb49a262b4e28,
     type: 3}
+  scoreValue: 10
 --- !u!114 &1866229976658209951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,10 +107,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddad07f61134e42469024a74fcbfabfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 1
+  bulletSpeed: 15
+  shootInterval: 2
+  initialDelay: 2
   firePoint: {fileID: 2490323150984831926}
   firePoint2: {fileID: 5755027329617809603}
   projectilePrefab: {fileID: 8297191405790434548, guid: 0707898d3f02d8c499685d8871d5031a,
     type: 3}
+  isBoss: 0
+  spreadCount: 5
+  spreadAngle: 45
+  spiralInterval: 0.1
+  spiralAngleStep: 15
+--- !u!114 &5803861246512287641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63637050091038583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4d7ef4e46d15b48814f5740b8f4e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefabs:
+  - prefab: {fileID: 6140972579523626162, guid: e9154be163d8c9245bd0301b94d74582,
+      type: 3}
+    weight: 20
+  - prefab: {fileID: 4256219081283213455, guid: e996c22790276bf49aeb841e89a1b251,
+      type: 3}
+    weight: 40
+  - prefab: {fileID: 8095336129290731027, guid: a30883bebbdbfb7488be008b58fd0e66,
+      type: 3}
+    weight: 40
+  dropChance: 100
 --- !u!1 &1112613527844184088
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +154,7 @@ GameObject:
   - component: {fileID: 4124702794306685404}
   - component: {fileID: 8335884206405967432}
   - component: {fileID: 7344434477572993462}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4952,7 +4993,7 @@ GameObject:
   - component: {fileID: 8741784707531297661}
   - component: {fileID: 8524385906705755321}
   - component: {fileID: 1755780871706616491}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9789,7 +9830,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5755027329617809603}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: firepoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9822,7 +9863,7 @@ GameObject:
   - component: {fileID: 2856959226673128504}
   - component: {fileID: 3201063595895329550}
   - component: {fileID: 6971955526466827544}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: aircraft-i_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9905,7 +9946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490323150984831926}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: firepoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
