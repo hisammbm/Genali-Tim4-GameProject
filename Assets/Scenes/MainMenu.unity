@@ -12839,7 +12839,7 @@ MonoBehaviour:
   DirectionalLight: {fileID: 829416442}
   Preset: {fileID: 11400000, guid: 2704858f7824d6947bac0a072ff51a40, type: 2}
   TimeOfDay: 7.7
-  TimeSpeed: 0.5
+  TimeSpeed: 0.2
   underFog: {fileID: 802800320}
 --- !u!43 &829724152
 Mesh:
