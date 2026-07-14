@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  buffIcon: {fileID: 21300000, guid: 3bbb0a2082da5854981c809f9e7b9354, type: 3}
+  buffIcon: {fileID: 21300000, guid: c69f26bab1630e34a972f637816d68c5, type: 3}
   duration: 20
   healAmount: 0
 --- !u!114 &1467020988619666403

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine rapidFireCoroutine;
     private Coroutine healthRegenCoroutine;
+
+    public GameObject PauseUi;
     public int CurrentHealth {
         get => _currentHealth;
         set
@@ -76,6 +78,7 @@ public class PlayerController : MonoBehaviour
             );
 
         Shoot();
+        Pause();
     }
 
     public void Shoot()
@@ -91,7 +94,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   void ShootForm(Transform point)
+    public void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            PauseUi.gameObject.SetActive(true);
+        }
+    }
+    void ShootForm(Transform point)
 {
     GameObject bulletObj = Instantiate(projectilePrefab, point.position, point.rotation);
     Bullet bullet = bulletObj.GetComponent<Bullet>();
